@@ -21,6 +21,8 @@ public class PlayerInteract : MonoBehaviour
     public Player playerScript;
 
     public InputField inputField;
+    public Text chatContent;
+    public LinkedList<string> chatMessages = new LinkedList<string>();
 
     //Methods
     public void Update()
@@ -113,11 +115,16 @@ public class PlayerInteract : MonoBehaviour
 
         }
 
+
         if(Input.GetKeyDown(KeyCode.Return))
         {
+            
             if (playerScript.isInChat)
             {
+                
                 playerScript.isInChat = false;
+                chatMessages.AddLast(inputField.text);
+                updateChat();
                 inputField.DeactivateInputField();
                 inputField.text = "";
                 
@@ -130,6 +137,17 @@ public class PlayerInteract : MonoBehaviour
             }
             
         }
+        
+    }
+
+    private void updateChat()
+    {
+        chatContent.text = "";
+        foreach(string line in chatMessages)
+        {
+            chatContent.text += line + "\n";
+        }
+
         
     }
     private void OnTriggerEnter2D(Collider2D collision)
