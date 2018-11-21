@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionObject : MonoBehaviour
 {
@@ -11,17 +12,20 @@ public class InteractionObject : MonoBehaviour
     public bool talks;      // If true this object can talk to the player
 
     public GameObject itemNeeded;  // Item needed in order to interact with this object
-    public string message;         // The message this object will give the player
+    public string message;
+
+    public TextAsset textFile;
+    public string[] sentences;
 
     public Animator anim;
     public string animBool = "";
 
-    //Methods
+    public int endSentence;
+    public int currentSentence;
 
+    //Methods
     public void doInteract()
     {
         gameObject.SetActive(false);
     }
-
-
 }

@@ -1,0 +1,7 @@
+Hello!
+My name is NPC test
+Im here so the dev can make the dialogues better
+Your objective in this test stage is simply:
+You need to get the key in order to open the chest
+when you do, its over...
+There is nothing else to do in this stage but move around and talk to me again

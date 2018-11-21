@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
 
     //Variables
     public GameObject[] inventory = new GameObject[10];
+
+    public GameObject InventoryPanel;
+    public Image[] inventoryImages = new Image[6];
 
 	//Methods
     public void addItem(GameObject item)
@@ -19,7 +23,8 @@ public class Inventory : MonoBehaviour {
                 inventory[i] = item;
                 Debug.Log(item.name + " Added to inventory");
                 itemAdded = true;
-                item.SendMessage("doInteract");  
+                inventoryImages[i].sprite = item.GetComponent<SpriteRenderer>().sprite;
+                item.SendMessage("doInteract");
                 break;
             }
         }
@@ -46,11 +51,10 @@ public class Inventory : MonoBehaviour {
     {
         for (int i = 0; i < inventory.Length; i++)
         {
-            Debug.Log(item + "      " + inventory[i]);
-            Debug.Log("");
             if(inventory[i] == item)
             {
                 inventory[i] = null;
+                inventoryImages[i].sprite = null;
                 break;
             }
         }
