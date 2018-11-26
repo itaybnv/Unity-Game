@@ -53,7 +53,6 @@ public class PlayerInteract : MonoBehaviour
                         currentInterObjScript.anim.SetBool(animBool, !animBoolB);
                         currentInterObjScript.locked = false;
                         //remove item
-                        Debug.Log(currentInterObjScript.itemNeeded);
                         inventory.removeItem(currentInterObjScript.itemNeeded);
                         currentInterObjScript.itemNeeded = null;
 

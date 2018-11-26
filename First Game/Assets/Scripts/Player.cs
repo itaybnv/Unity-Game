@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     //Variables
+    public PlayerInfo playerInfo;
     public float speed;
     public Animator animator;
 
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
 
     public bool isInChat;
 
+    public Camera camera;
+
     
 
     //Methods
@@ -21,6 +24,7 @@ public class Player : MonoBehaviour
     {
         healthText.text = "Health: " + Mathf.Round(Health);
         isInChat = false;
+        camera = FindObjectOfType<Camera>();
     }
     void Update ()
     {
@@ -54,6 +58,47 @@ public class Player : MonoBehaviour
                 animator.SetBool("Moving Down", true);
             }
             else animator.SetBool("Moving Down", false);
+            // check if the first ability was pressed
+            if (Input.GetButtonDown("FirstAbility")){
+
+                
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                float angle = Mathf.Atan2(mousePosition.y - transform.position.y, mousePosition.x - transform.position.x) * Mathf.Rad2Deg;
+                GameObject newArrow = Instantiate(playerInfo.projectile, transform.position, Quaternion.Euler(0, 0, angle));
+                newArrow.AddComponent<ElectroBallScript>();
+                newArrow.GetComponent<Rigidbody2D>().AddRelativeForce(playerInfo.projectileSpeed);
+            }
+            // check if the second ability was pressed
+            if (Input.GetButtonDown("SecondAbility"))
+            {
+                Collider2D[] hitObjects = Physics2D.OverlapCircleAll (transform.position, playerInfo.attackRange);
+                for (int i = 0; i < hitObjects.Length; i++)
+                {
+                    Debug.Log("hitObject[" + i + "]: " + hitObjects[i]);
+                }
+                // loop through all the objects in the melee range
+                for (int i = 0; i < hitObjects.Length; i++)
+                {
+                    // Ignore the player 
+                    if (!hitObjects[i].CompareTag("Player"))
+                    {
+                        // if the object in index I is an interactable object and is destroyable
+                        if (hitObjects[i].CompareTag("interObject") && hitObjects[i].GetComponent<InteractionObject>().destroyAble)
+                        {
+                            hitObjects[i].gameObject.SendMessage("TakeDamage", playerInfo.meleeDamage);
+                            break;
+                        
+                        }
+                        // if the object in index I is an enemy
+                        if  (hitObjects[i].CompareTag("Enemy"))
+                        {
+                            hitObjects[i].gameObject.SendMessage("TakeDamage", playerInfo.meleeDamage);
+                            break;  //stop damaging on first enemy hit
+                        }
+                        
+                    }
+                }
+            }
             
         }
     }
