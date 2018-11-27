@@ -12,12 +12,18 @@ public class EnemyAI : MonoBehaviour
 	public Transform[] patrolPoints;
 	public float movementSpeed;
 	public int maxHealth = 100;
+	public float chaseRadius;
+	public bool ranged;
+	public bool melee;
+
 		//Private Variables
 	private int i = 0;
 	private Transform nextPatrolPoint;
 	private int health;
 	private int redHealth;
 	private int maxRedHealth;
+	private GameObject chaseGameObject;
+
 
 
 	//Methods
@@ -30,7 +36,12 @@ public class EnemyAI : MonoBehaviour
 	}
 	void Update()
 	{
-		Patrol();
+		if (!chaseGameObject)
+		{
+			Patrol();
+			lookForChaseObject();
+		}
+		else chase();
 	}
 
 	void Patrol()
@@ -46,6 +57,27 @@ public class EnemyAI : MonoBehaviour
 			}
 		}
 		transform.position = Vector2.MoveTowards(transform.position, patrolPoints[i].transform.position, movementSpeed * Time.deltaTime);
+	}
+
+	private void lookForChaseObject()
+	{
+		Collider2D[] hitObjects = Physics2D.OverlapCircleAll (transform.position, chaseRadius);
+		for (int i = 0; i < hitObjects.Length; i++)
+		{
+			if(hitObjects[i].CompareTag("Player"))
+			{
+				chaseGameObject = hitObjects[i].gameObject;
+				break;
+			}	
+		}
+	}
+	void chase()
+	{
+		if(Vector2.Distance(transform.position, chaseGameObject.transform.position) > 0)
+		{
+			transform.position = Vector2.MoveTowards(transform.position, chaseGameObject.transform.position, movementSpeed * Time.deltaTime);
+		}
+		else chaseGameObject = null;
 	}
 	
 	public void TakeDamage(int damage)
