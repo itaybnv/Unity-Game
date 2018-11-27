@@ -73,7 +73,7 @@ public class EnemyAI : MonoBehaviour
 	}
 	void chase()
 	{
-		if(Vector2.Distance(transform.position, chaseGameObject.transform.position) > 0)
+		if(Vector2.Distance(transform.position, chaseGameObject.transform.position) > 1.48)
 		{
 			transform.position = Vector2.MoveTowards(transform.position, chaseGameObject.transform.position, movementSpeed * Time.deltaTime);
 		}
