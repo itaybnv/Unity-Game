@@ -6,16 +6,18 @@ using UnityEngine.UI;
 public class EnemyAI : MonoBehaviour 
 {
 	//Variables
+		//Public Variables
+	public Image healthBar;
+	public Image healthBarRed;
 	public Transform[] patrolPoints;
-	private int i = 0;
 	public float movementSpeed;
-	private Transform nextPatrolPoint;
 	public int maxHealth = 100;
+		//Private Variables
+	private int i = 0;
+	private Transform nextPatrolPoint;
 	private int health;
 	private int redHealth;
 	private int maxRedHealth;
-	public Image healthBar;
-	public Image healthBarRed;
 
 
 	//Methods

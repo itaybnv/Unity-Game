@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     public Animator animator;
 
     public float Health;
-    public Text healthText;
 
     public bool isInChat;
 
@@ -22,21 +21,18 @@ public class Player : MonoBehaviour
     //Methods
     void Start()
     {
-        healthText.text = "Health: " + Mathf.Round(Health);
         isInChat = false;
         camera = FindObjectOfType<Camera>();
     }
     void Update ()
     {
-        //Health Text
-        healthText.text = "Health: " + Mathf.Round(Health);
-
         // Player movement
         if (!isInChat)
         {
             if (Input.GetKey(KeyCode.D))
             {
                 transform.Translate(Vector2.right * speed * Time.deltaTime);
+                //gameObject.GetComponent<Rigidbody2D>().MovePosition(Vector2.right * speed * Time.deltaTime);
                 animator.SetBool("Moving Right", true);
             }
             else animator.SetBool("Moving Right", false);

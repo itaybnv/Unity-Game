@@ -122,7 +122,7 @@ public class PlayerInteract : MonoBehaviour
             {
                 
                 playerScript.isInChat = false;
-                chatMessages.AddLast(inputField.text);
+                chatMessages.AddLast(transform.name + ": " + inputField.text);
                 updateChat();
                 inputField.DeactivateInputField();
                 inputField.text = "";

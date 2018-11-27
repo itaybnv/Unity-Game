@@ -24,23 +24,19 @@ public class ElectroBallScript : MonoBehaviour
 
 		distanceTravelled += Vector3.Distance(transform.position, lastPosition);
   		lastPosition = transform.position;
-		isColliding = false;
 		
 		
 	}
-	private bool isColliding;
-	private void OnTriggerExit2D(Collider2D collision)
+	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (isColliding) return;
-		isColliding = true;
 		// if the collision isn't the player
 		if (!collision.CompareTag("Player")){
 			// if the collision is a destructable interaction object Or an enemy
 			if ((collision.CompareTag("interObject") && collision.GetComponent<InteractionObject>().destroyAble) || collision.CompareTag("Enemy"))
 			{
 				GameObject.Destroy(gameObject);
-				collision.gameObject.SendMessage("TakeDamage", damage);
-				Debug.Log("Electro Hit " + collision.name + " For " + damage + " Damage ");
+				collision.gameObject.SendMessage("TakeDamage", damage / 2);
+				Debug.Log("Electro Hit " + collision.name + " For " + damage / 2 + " Damage ");
 				gameObject.GetComponent<CircleCollider2D>().enabled = false;
 			}
 		}
