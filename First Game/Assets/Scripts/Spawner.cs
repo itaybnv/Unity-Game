@@ -10,15 +10,36 @@ public class Spawner : MonoBehaviour
 	public float spawnInterval;
 	public float startingSpawnCount;
 	public GameObject spawnObject;
-	public bool spawnEveryClear;
-	public bool constantSpawn;
+	public float spawnEachTime;
+	public bool doSpawn;
 
 	void Start()
+	{
+		Spawn(startingSpawnCount);
+		StartCoroutine("SpawnRepeat",spawnEachTime);
+	}
+	void Spawn(float spawnCount)
 	{
 		for (int i = 0; i < startingSpawnCount; i++)
 		{
 			Instantiate(spawnObject,new Vector2(Random.Range(topLeft.x, bottomRight.x) + transform.position.x ,Random.Range(topLeft.y, bottomRight.y) + transform.position.y),Quaternion.identity);
+		}
+	}
+
+	IEnumerator SpawnRepeat(float spawnCount)
+	{
+		float originalSpawnCount = spawnCount;
+		yield return new WaitForSeconds(spawnInterval);
+		while(doSpawn)
+		{
+			while(spawnCount > 0)
+			{
+			Instantiate(spawnObject,new Vector2(Random.Range(topLeft.x, bottomRight.x) + transform.position.x ,Random.Range(topLeft.y, bottomRight.y) + transform.position.y),Quaternion.identity);
 			Debug.Log("spawn");
+			spawnCount--;
+			}
+			spawnCount = originalSpawnCount;
+			yield return new WaitForSeconds(spawnInterval);
 		}
 	}
 
