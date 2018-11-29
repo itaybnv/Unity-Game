@@ -21,7 +21,6 @@ public class Inventory : MonoBehaviour {
             if(inventory[i] == null)
             {
                 inventory[i] = item;
-                Debug.Log(item.name + " Added to inventory");
                 itemAdded = true;
                 inventoryImages[i].sprite = item.GetComponent<SpriteRenderer>().sprite;
                 item.SendMessage("doInteract");
@@ -31,7 +30,6 @@ public class Inventory : MonoBehaviour {
         //Inventory is full
         if (!itemAdded)
         {
-            Debug.Log(item.name + "Can't be added, inventory full");
         }
     }
     

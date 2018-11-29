@@ -12,9 +12,17 @@ public class Spawner : MonoBehaviour
 	public GameObject spawnObject;
 	public float spawnEachTime;
 	public bool doSpawn;
+	public bool waitForLeftAlive;
+	private LinkedList<GameObject> leftAlive;
+
+	void Update()
+	{
+		var currentNode = leftAlive;
+	}
 
 	void Start()
 	{
+		leftAlive = new LinkedList<GameObject>();
 		Spawn(startingSpawnCount);
 		StartCoroutine("SpawnRepeat",spawnEachTime);
 	}
@@ -22,7 +30,8 @@ public class Spawner : MonoBehaviour
 	{
 		for (int i = 0; i < startingSpawnCount; i++)
 		{
-			Instantiate(spawnObject,new Vector2(Random.Range(topLeft.x, bottomRight.x) + transform.position.x ,Random.Range(topLeft.y, bottomRight.y) + transform.position.y),Quaternion.identity);
+			GameObject temp = Instantiate(spawnObject,new Vector2(Random.Range(topLeft.x, bottomRight.x) + transform.position.x ,Random.Range(topLeft.y, bottomRight.y) + transform.position.y),Quaternion.identity);
+			leftAlive.AddLast(temp);
 		}
 	}
 
@@ -34,8 +43,8 @@ public class Spawner : MonoBehaviour
 		{
 			while(spawnCount > 0)
 			{
-			Instantiate(spawnObject,new Vector2(Random.Range(topLeft.x, bottomRight.x) + transform.position.x ,Random.Range(topLeft.y, bottomRight.y) + transform.position.y),Quaternion.identity);
-			Debug.Log("spawn");
+			GameObject temp = Instantiate(spawnObject,new Vector2(Random.Range(topLeft.x, bottomRight.x) + transform.position.x ,Random.Range(topLeft.y, bottomRight.y) + transform.position.y),Quaternion.identity);
+			leftAlive.AddLast(temp);
 			spawnCount--;
 			}
 			spawnCount = originalSpawnCount;

@@ -36,7 +36,6 @@ public class ElectroBallScript : MonoBehaviour
 			{
 				GameObject.Destroy(gameObject);
 				collision.gameObject.SendMessage("TakeDamage", damage / 2);
-				Debug.Log("Electro Hit " + collision.name + " For " + damage / 2 + " Damage ");
 				gameObject.GetComponent<CircleCollider2D>().enabled = false;
 			}
 		}
