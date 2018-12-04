@@ -14,9 +14,7 @@ public class CameraScript : MonoBehaviour
     void Update ()
     {
         Vector3 pos = new Vector3();
-        pos.x = player.position.x;
-        pos.y = player.position.y;
-        pos.z = transform.position.z;
+        pos = player.position;
         transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smooth);
 
     }

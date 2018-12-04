@@ -107,8 +107,7 @@ public class Player : MonoBehaviour
 
         //Handle cooldowns
         for (int i = 0; i < cooldowns.Length; i++)
-        {
-            Debug.Log("cooldown["+i+"]: "+cooldownsMax[i]);           
+        {         
             if(cooldowns[i] > 0)
             {
                 cooldowns[i] -= 1 * Time.deltaTime;
